@@ -184,6 +184,9 @@ const updatePassword = AsyncHandler(async (req, res, next) => {
   if (!oldPassword || !newPassword) {
     throw new ApiError(400, "All fields are required");
   }
+  if (newPassword.length < 6) {
+    throw new ApiError(400, "Password must be at least 6 characters long");
+  }
   const User = await User.findOne({ username });
   if (!User) {
     throw new ApiError(404, "User not found");
@@ -201,7 +204,7 @@ const updatePassword = AsyncHandler(async (req, res, next) => {
 const deleteUser = AsyncHandler(async (req, res, next) => {
   const user = req.user;
   const name = user.username;
-  console.log(name);
-  return res.json(`${name} deleted success`);
+  User.collection.deleteOne({ _id: user._id });
+  return res.status(200).json(`${name} deleted success`);
 });
 export { register, login, logout, updateDetails, deleteUser };

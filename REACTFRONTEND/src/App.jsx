@@ -1,6 +1,7 @@
 // import { useState } from 'react'
 import "./App.css";
 import Header from "./components/header.jsx";
+import { Outlet } from "react-router-dom";
 import MainContent from "./components/MainContent.jsx";
 import Footer from "./components/footer.jsx";
 function App() {
@@ -9,8 +10,6 @@ function App() {
     <div className="root">
       <Header />
       <MainContent />
-      <hr />
-      <br />
       <Footer />
     </div>
   );

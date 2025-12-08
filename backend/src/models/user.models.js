@@ -3,7 +3,7 @@ dotenv.config({path:"./.env"})
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { type } from "mongoose/lib/schema/operators/type.js";
+// import { type } from "mongoose/lib/schema/operators/type.js";
 const UserSchema = new mongoose.Schema(
   {
     fullName: {
@@ -55,7 +55,7 @@ const UserSchema = new mongoose.Schema(
         ref: "Routine",
       },
     ],
-    loginToken: {
+    accessToken: {
       type: String,
     },
     refreshToken: {
@@ -71,11 +71,10 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-UserSchema.method.isPasswordCorrect = async function (password) {
+UserSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-
-UserSchema.meathod.generateAccessToken = async function () {
+UserSchema.methods.generateAccessToken = async function () {
   return jwt.sign(
     {
       _id: this._id,
@@ -87,7 +86,7 @@ UserSchema.meathod.generateAccessToken = async function () {
     { expiresIn: process.env.Access_TOKEN_EXPIRY }
   );
 };
-UserSchema.meathod.generateRefreshToken = async function () {
+UserSchema.methods.generateRefreshToken = async function () {
   return jwt.sign(
     {
       _id: this._id,

@@ -3,6 +3,8 @@ import './Style.css'
 function Footer() {
         return <>
         <footer class="flex justify-center align-center footer bg-black clr-white">
+          <hr />
+      <br />
       <div>All rights reserved</div>
     </footer>
         </>
